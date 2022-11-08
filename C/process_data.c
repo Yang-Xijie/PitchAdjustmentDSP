@@ -29,7 +29,7 @@ void Pass(const fract16 x[], fract16 y[], int n, int step) {
 }
 
 void IncreasePitchTwice(const fract16 x[], fract16 y[], int h_i, int step) {
-  // ²åÖµÖØ²ÉÑù
+  // æ’å€¼é‡é‡‡æ ·
   fract16 resampled_data[H_A] = {0};
   for (int i = 0; i < H_A; i++) {
     float position = (float)i * ALPHA;
@@ -39,7 +39,7 @@ void IncreasePitchTwice(const fract16 x[], fract16 y[], int h_i, int step) {
     resampled_data[i] =
         (1.0 - offset) * x[step * left] + offset * x[step * right];
   }
-  // ¿½±´²îÖµÖØ²ÉÑùµÄÊı¾İ
+  // æ‹·è´å·®å€¼é‡é‡‡æ ·çš„æ•°æ®
   int resampled_buffer_copy_position = resampled_buffer_input_position;
   for (int i = 0; i < H_A; i++) {
     resampled_buffer[resampled_buffer_copy_position] = resampled_data[i];
@@ -48,27 +48,27 @@ void IncreasePitchTwice(const fract16 x[], fract16 y[], int h_i, int step) {
       resampled_buffer_copy_position = 0;
     }
   }
-  resampled_buffer_input_position += H_A;  // ÕâÀïĞèÒª×öÑ­»·´¦Àí
+  resampled_buffer_input_position += H_A;  // è¿™é‡Œéœ€è¦åšå¾ªç¯å¤„ç†
   if (resampled_buffer_input_position >= F_A) {
     resampled_buffer_input_position -= F_A;
   }
-  // ³Ë´°º¯Êı
+  // ä¹˜çª—å‡½æ•°
   int resampled_start_position = resampled_buffer_input_position;
   fract16 dot_production_result[N] = {0};
   for (int i = 0; i < N; i++) {
-    int temp = resampled_buffer[resampled_start_position] * w[i];  // 32Î»
-    dot_production_result[i] = (temp + 0x3FFFF) >> 15;             // 16Î»
+    int temp = resampled_buffer[resampled_start_position] * w[i];  // 32ä½
+    dot_production_result[i] = (temp + 0x3FFFF) >> 15;             // 16ä½
     resampled_start_position += 1;
     if (resampled_start_position == N) {
       resampled_start_position = 0;
     }
   }
-  // µş¼ÓºÍÊä³ö
+  // å åŠ å’Œè¾“å‡º
   for (int i = 0; i < H_S; i++) {
-    // Êä³ö
+    // è¾“å‡º
     y[step * i] = stretched_buffer[stretched_buffer_output_position + i] +
                   dot_production_result[i];
-    // ÒÑ¾­Êä³öÁËËùÒÔÖÃÁã
+    // å·²ç»è¾“å‡ºäº†æ‰€ä»¥ç½®é›¶
     stretched_buffer[stretched_buffer_output_position + i] = 0;
   }
   if (stretched_buffer_output_position == 0) {
@@ -77,7 +77,7 @@ void IncreasePitchTwice(const fract16 x[], fract16 y[], int h_i, int step) {
     stretched_buffer_output_position = 0;
   }
   for (int i = 0; i < H_S; i++) {
-    // ĞèÒª´æ´¢¸øÏÂÒ»´Î¼ÓºÍµÄÖµ
+    // éœ€è¦å­˜å‚¨ç»™ä¸‹ä¸€æ¬¡åŠ å’Œçš„å€¼
     stretched_buffer[stretched_buffer_output_position + i] =
         dot_production_result[H_S + i];
   }
