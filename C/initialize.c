@@ -1,4 +1,5 @@
-#include "all.h"
+#include "constants.h"
+#include "isr.h"
 #include "parameters.h"
 #include "process_data.h"
 

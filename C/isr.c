@@ -1,4 +1,6 @@
-#include "all.h"
+#include "isr.h"
+
+#include "constants.h"
 #include "process_data.h"
 
 // This ISR is executed after a complete frame of input data has been received.

@@ -1,6 +1,8 @@
 #include "process_data.h"
 
-#include "all.h"
+#include <fract.h>
+
+#include "constants.h"
 #include "hanning_window.h"
 #include "parameters.h"
 

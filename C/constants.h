@@ -1,11 +1,5 @@
-#ifndef __Talkthrough_DEFINED
-#define __Talkthrough_DEFINED
-
-// [Header files]
-#include <ccblkfn.h>
-#include <cdefBF533.h>
-#include <sys\exception.h>
-#include <sysreg.h>
+#ifndef CONSTANTS_H_
+#define CONSTANTS_H_
 
 // [Symbolic constants]
 // addresses for Port B in Flash A
@@ -52,13 +46,4 @@
 // DMA flow mode
 #define FLOW_1 0x1000
 
-// [Prototypes]
-void Init_EBIU(void);
-void Init_Flash(void);
-void Init1836(void);
-void Init_Sport0(void);
-void Init_DMA(void);
-void Init_Sport_Interrupts(void);
-void Enable_DMA_Sport0(void);
-
-#endif  //__Talkthrough_DEFINED
+#endif

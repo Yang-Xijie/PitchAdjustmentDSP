@@ -10,4 +10,4 @@ extern short* RxPong;
 extern short* TxPing;
 extern short* TxPong;
 
-#endif /* PROCESS_DATA_H_ */
+#endif

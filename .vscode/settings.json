@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "constants.h": "c",
+        "initialize.h": "c",
+        "hanning_window.h": "c"
+    }
+}

@@ -13,11 +13,10 @@
 // AD1836 codec. The SPI port is disabled after initialization.  The data
 // to/from the codec are transfered over SPORT0 in TDM mode.
 
-#include <fract.h>
+#include <ccblkfn.h>
+#include <sysreg.h>  // reg_SYSCFG
 
-#include "all.h"
-#include "ccblkfn.h"
-#include "sysreg.h"
+#include "initialize.h"
 
 // After calling a few initalization routines, main() just waits in a loop
 // forever.  The code to process the incoming data can be placed in the function
