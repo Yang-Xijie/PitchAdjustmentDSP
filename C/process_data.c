@@ -17,9 +17,9 @@ short* TxPong = TxBuffer + 2 * H_I;
 
 // -----
 
-fract16 resampled_buffer[F_A] = {0};
+fract16 resampled_buffer_right[F_A] = {0};
 int resampled_buffer_input_position = F_A - H_A;
-fract16 stretched_buffer[F_S] = {0};
+fract16 stretched_buffer_right[F_S] = {0};
 int stretched_buffer_output_position = F_S - H_S;
 
 void Pass(const fract16 x[], fract16 y[], int n, int step) {
@@ -28,7 +28,8 @@ void Pass(const fract16 x[], fract16 y[], int n, int step) {
   }
 }
 
-void IncreasePitchTwice(const fract16 x[], fract16 y[], int h_i, int step) {
+void IncreasePitch(const fract16 x[], fract16 y[], fract16 resampled_buffer[],
+                   fract16 stretched_buffer[], int step) {
   // 插值重采样
   fract16 resampled_data[H_A] = {0};
   for (int i = 0; i < H_A; i++) {
@@ -91,18 +92,18 @@ void Process_Data(void) {
   // Ping-Pong Flag
   static int ping = 0;
   /* core processing in ping-pong mode */
-  if (ping == 0) {
-    // left and right channels filtering, ping slot
+  if (ping == 0) { // left and right channels filtering, ping slot
     // Pass(RxPing+0, TxPing+0, H_I, 2);
     // Pass(RxPing+1, TxPing+1, H_I, 2);
-    IncreasePitchTwice(RxPing + 0, TxPing + 0, H_I, 2);
-    // IncreasePitchTwice(RxPing + 1, TxPing + 1, H_I, 2);
-  } else {
-    // left and right channels filtering, pong slot
+    IncreasePitch(RxPing + 0, TxPing + 0, resampled_buffer_right,
+                  stretched_buffer_right, 2);
+    // IncreasePitch(RxPing + 1, TxPing + 1, 2);
+  } else { // left and right channels filtering, pong slot
     // Pass(RxPong+0, TxPong+0, H_I, 2);
     // Pass(RxPong+1, TxPong+1, H_I, 2);
-    IncreasePitchTwice(RxPong + 0, TxPong + 0, H_I, 2);
-    // IncreasePitchTwice(RxPong + 1, TxPong + 1, H_I, 2);
+    IncreasePitch(RxPong + 0, TxPong + 0, resampled_buffer_right,
+                  stretched_buffer_right, 2);
+    // IncreasePitch(RxPong + 1, TxPong + 1, 2);
   }
   ping ^= 0x1;
 }
