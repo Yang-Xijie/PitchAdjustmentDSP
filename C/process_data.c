@@ -94,7 +94,7 @@ void IncreasePitch(const fract16 x[], fract16 y[], fract16 resampled_buffer[],
 // This function is called for each DMA RX Complete Interrupt,
 // or 2*H_I samples for a stereo signal. Then left and
 // right channels are separately filtered ping-pong mode.
-void Process_Data(void) {
+void ProcessData(void) {
   // Ping-Pong Flag
   static int ping = 0;
   /* core processing in ping-pong mode */

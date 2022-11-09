@@ -1,7 +1,7 @@
 #ifndef PROCESS_DATA_H_
 #define PROCESS_DATA_H_
 
-void Process_Data(void);
+void ProcessData(void);
 
 extern short RxBuffer[];
 extern short TxBuffer[];
