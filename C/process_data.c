@@ -18,9 +18,13 @@ short* TxPong = TxBuffer + 2 * H_I;
 // -----
 
 fract16 resampled_buffer_right[F_A] = {0};
+fract16 resampled_buffer_left[F_A] = {0};
 int resampled_buffer_input_position_right = F_A - H_A;
+int resampled_buffer_input_position_left = F_A - H_A;
 fract16 stretched_buffer_right[F_S] = {0};
+fract16 stretched_buffer_left[F_S] = {0};
 int stretched_buffer_output_position_right = F_S - H_S;
+int stretched_buffer_output_position_left = F_S - H_S;
 
 void Pass(const fract16 x[], fract16 y[], int n, int step) {
   for (int i = 0; i < n; i++) {
@@ -101,7 +105,9 @@ void Process_Data(void) {
                   &resampled_buffer_input_position_right,
                   stretched_buffer_right,
                   &stretched_buffer_output_position_right, 2);
-    // IncreasePitch(RxPing + 1, TxPing + 1, 2);
+    IncreasePitch(RxPing + 1, TxPing + 1, resampled_buffer_left,
+                  &resampled_buffer_input_position_left, stretched_buffer_left,
+                  &stretched_buffer_output_position_left, 2);
   } else {  // left and right channels filtering, pong slot
     // Pass(RxPong+0, TxPong+0, H_I, 2);
     // Pass(RxPong+1, TxPong+1, H_I, 2);
@@ -109,7 +115,9 @@ void Process_Data(void) {
                   &resampled_buffer_input_position_right,
                   stretched_buffer_right,
                   &stretched_buffer_output_position_right, 2);
-    // IncreasePitch(RxPong + 1, TxPong + 1, 2);
+    IncreasePitch(RxPong + 1, TxPong + 1, resampled_buffer_left,
+                  &resampled_buffer_input_position_left, stretched_buffer_left,
+                  &stretched_buffer_output_position_left, 2);
   }
   ping ^= 0x1;
 }
